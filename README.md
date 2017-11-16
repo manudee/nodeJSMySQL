@@ -1,4 +1,4 @@
-# nodeJSMySQL
+# bamazon application
 
 This is a CLI Node app which includes mysql database for storing a product inventory for Bamazon!.
 The database files can be found in 
