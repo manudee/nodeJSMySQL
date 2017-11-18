@@ -3,11 +3,11 @@ var inquirer = require("inquirer");
 var Table = require('cli-table');
 
 var table = new Table({
-		chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
-		, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
-		, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
-		, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
-	});
+	chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+	, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+	, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+	, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
+});
 
 
 var connection = mysql.createConnection({
@@ -74,10 +74,10 @@ function userInput(){
 			var stock_quantity = rows[0].stock_quantity;
 
 			if(stock_quantity < answer.quantity)
-				{
-					console.log("Insufficient quantity!");
-					connection.end();
-				}
+			{
+				console.log("Insufficient quantity!");
+				connection.end();
+			}
 
 			else
 				updateDB(answer.item_id, answer.quantity);
@@ -115,17 +115,26 @@ function updateDB(item_id,quantity){
 			var cost = results[0].price * quantity;
 			console.log(" Your total cost for " + product + " is $ " + parseFloat(cost,2));
 
+			var update = `update products set product_sales = product_sales + ${cost} where item_id = ${item_id}`;
+
+			//console.log(update);
+			connection.query(update,function(err,data){
+				if(err) throw err;
+				console.log(" Updated product sales ");
+				//console.log(data);
+
+			})
 
 			//console.log("Item_id|product_name|price");
 			table.push([results[0].item_id,results[0].product_name,results[0].price,cost]);
 			
 			//console.log(results[0].item_id + "------|----" + results[0].product_name  + "-----|" + results[0].price + "-----|" + results[0].stock_quantity);
 			console.log(table.toString());
-			
+			connection.end();
 		})
 
 
-		connection.end();
+		
 
 	});
 

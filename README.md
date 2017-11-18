@@ -35,3 +35,12 @@ Below are some screenshots to go over the application functionality for each use
 
  ### AddNewProduct
  ![GitHub Logo](/images/bamazonManagerAddNewProduct.PNG)
+
+
+## User Role: bamazon Supervisor
+
+  ### View Sale by department
+  ![GitHub Logo](/images/bamazonSupervisorViewSale.PNG)
+
+  ### Add new department
+  ![GitHub Logo](/images/bamazonSupervisorCreateNewDepartment.PNG)
