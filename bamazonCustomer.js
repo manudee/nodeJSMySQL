@@ -106,16 +106,19 @@ function updateDB(item_id,quantity){
 		connection.query(select, function(err, results) {
 			if (err) throw err;
 			console.log(" Updated Products Database");
-			table.push(["itemId","productName","price","stock_quantity"]);
+			table.push(["itemId","productName","unit price","cost"]);
 
-			//console.log("Item_id|product_name|price");
-			table.push([results[0].item_id,results[0].product_name,results[0].price,results[0].stock_quantity]);
-			
-			//console.log(results[0].item_id + "------|----" + results[0].product_name  + "-----|" + results[0].price + "-----|" + results[0].stock_quantity);
-			console.log(table.toString());
 			var product = results[0].product_name;
 			var cost = results[0].price * quantity;
 			console.log(" Your total cost for " + product + " is $ " + parseFloat(cost,2));
+
+
+			//console.log("Item_id|product_name|price");
+			table.push([results[0].item_id,results[0].product_name,results[0].price,cost]);
+			
+			//console.log(results[0].item_id + "------|----" + results[0].product_name  + "-----|" + results[0].price + "-----|" + results[0].stock_quantity);
+			console.log(table.toString());
+			
 		})
 
 
