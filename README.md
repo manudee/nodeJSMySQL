@@ -12,3 +12,8 @@ Javascript files for each type of user role(either customer/manager) are found b
 Below are some screenshots to go over the application functionality for each user role.
 
 # Functionality 
+## bamazon Customer positive case transaction
+![GitHub Logo](/images/bamazonCustomer.png)
+
+## bamazon Customer negative case transaction
+![GitHub Logo](/images/bamazonCustomerNegativeCase.png)
