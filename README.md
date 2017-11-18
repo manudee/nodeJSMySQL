@@ -5,10 +5,14 @@ The database files can be found in
   * customerView.sql
 
 Database is called Bamazon with a products table to hold all the different products available in the inventory.
+It also includes a a table to hold list of all the departments.
+
 Javascript files for each type of user role(either customer/manager) are found below
   * bamazonCustomer.js
   * bamazonManager.js
+  * bamazonSupervisor.js
 
+Based on the various user roles, the application provides different options to the user, so appropriate action can be taken on the database.
 
 
 # Functionality 
