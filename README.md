@@ -15,10 +15,10 @@ Javascript files for each type of user role(either customer/manager) are found b
 Below are some screenshots to go over the application functionality for each user role.
 
 ## User Role: Customer
- ### positive case transaction
+ ### Positive case transaction
  ![GitHub Logo](/images/bamazonCustomer.png)
 
- ### negative case transaction
+ ### Negative case transaction
  ![GitHub Logo](/images/bamazonCustomerNegativeCase.png)
 
 
@@ -29,7 +29,7 @@ Below are some screenshots to go over the application functionality for each use
  ### ViewLowInventory
  ![GitHub Logo](/images/bamazonManagerViewLowInventory.PNG)
 
- ### AddtoInventory(add on units to existing products)
+ ### AddtoInventory
  ![GitHub Logo](/images/bamazonManagerAddToInventory.PNG)
 
 
