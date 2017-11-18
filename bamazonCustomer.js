@@ -74,7 +74,10 @@ function userInput(){
 			var stock_quantity = rows[0].stock_quantity;
 
 			if(stock_quantity < answer.quantity)
-				console.log("Insufficient quantity!");
+				{
+					console.log("Insufficient quantity!");
+					connection.end();
+				}
 
 			else
 				updateDB(answer.item_id, answer.quantity);
