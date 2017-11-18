@@ -2,6 +2,12 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var Table = require('cli-table');
 
+var table = new Table({
+	chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+	, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+	, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+	, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
+});
 
 var connection = mysql.createConnection({
 	host: "localhost",
@@ -56,14 +62,26 @@ function showOptions(){
 
 function viewSale(){
 
+	var table = new Table({
+		chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+		, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+		, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+		, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
+	});
+
 	var sql = "SELECT item_id,product_name,price, stock_quantity FROM products";
 	connection.query(sql, function(err, results) {
 		if (err) throw err;
-		console.log("Item_id|product_name|price|Quantity");
+		console.log(" Existing products Database ");
+		//console.log("Item_id|product_name|price|Quantity");
+		table.push(["itemId","productName","price","Quantity"]);
 
 		for (var i = 0; i < results.length; i++) {
-			console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+			//console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+			table.push([results[i].item_id,results[i].product_name,results[i].price,results[i].stock_quantity]);
+
 		}
+		console.log(table.toString());
 		showOptions();
 	})
 
@@ -74,14 +92,25 @@ function viewSale(){
 
 function viewLowInventory(){
 
+	var table = new Table({
+		chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+		, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+		, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+		, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
+	});
+
 	var sql = "SELECT item_id,product_name,price, stock_quantity FROM products where stock_quantity < 5";
 	connection.query(sql, function(err, results) {
 		if (err) throw err;
-		console.log("Item_id|product_name|price|Quantity");
+		console.log(" Low Inventory ");
+		table.push(["itemId","productName","price","Quantity"]);
+		//console.log("Item_id|product_name|price|Quantity");
 
 		for (var i = 0; i < results.length; i++) {
-			console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+			//console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+			table.push([results[i].item_id,results[i].product_name,results[i].price,results[i].stock_quantity]);
 		}
+		console.log(table.toString());
 		showOptions();
 	})
 
@@ -93,7 +122,13 @@ function viewLowInventory(){
 
 function addToInventory(){
 
-
+	var table = new Table({
+		chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+		, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+		, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+		, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
+	});
+	
 	inquirer.prompt([{
 		name: "item_id",
 		type: "input",
@@ -104,9 +139,11 @@ function addToInventory(){
 		type: "input",
 		message: "How many units you want to add?"
 	}]).then(function(answer){
+		
 		console.log(answer.item_id);
 		console.log(answer.quantity);
-		viewSale();
+		
+		// viewSale();
 
 		var sql = `UPDATE products SET stock_quantity = stock_quantity + ${answer.quantity} where item_id = ${answer.item_id}`;
 		connection.query(sql, function(err,rows){
@@ -116,11 +153,14 @@ function addToInventory(){
 
 			connection.query(select, function(err, results) {
 				if (err) throw err;
-				console.log("Item_id|product_name|price|Quantity");
+				table.push(["itemId","productName","price","Quantity"]);
+				//console.log("Item_id|product_name|price|Quantity");
 
 				for (var i = 0; i < results.length; i++) {
-					console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+					//console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+					table.push([results[i].item_id,results[i].product_name,results[i].price,results[i].stock_quantity]);
 				}
+				console.log(table.toString());
 				showOptions();
 			})
 
@@ -135,6 +175,12 @@ function addToInventory(){
 
 
 function addNewProducts(){
+	var table = new Table({
+		chars: { 'top': '═' , 'top-mid': '╤' , 'top-left': '╔' , 'top-right': '╗'
+		, 'bottom': '═' , 'bottom-mid': '╧' , 'bottom-left': '╚' , 'bottom-right': '╝'
+		, 'left': '║' , 'left-mid': '╟' , 'mid': '─' , 'mid-mid': '┼'
+		, 'right': '║' , 'right-mid': '╢' , 'middle': '│' }
+	});
 
 	inquirer
 	.prompt([
@@ -161,7 +207,7 @@ function addNewProducts(){
 	]).then(function(answer){
 
 
-		console.log(answer.item_id);
+		
 		console.log(answer.product_name);
 		console.log(answer.department_name);
 		console.log(answer.price);
@@ -172,16 +218,19 @@ function addNewProducts(){
 
 		connection.query(insert, function(err,results){
 			if (err) throw err;
-			console.log(results);
+			//console.log(results);
 			var select = `SELECT item_id,product_name,price,stock_quantity FROM products`;
 
 			connection.query(select, function(err, results) {
 				if (err) throw err;
-				console.log("Item_id|product_name|price|Quantity");
+				table.push(["itemId","productName","price","Quantity"]);
+				//console.log("Item_id|product_name|price|Quantity");
 
 				for (var i = 0; i < results.length; i++) {
-					console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+					//console.log(results[i].item_id + "------|----" + results[i].product_name  + "-----|" + results[i].price + "-----|" + results[i].stock_quantity);
+					table.push([results[i].item_id,results[i].product_name,results[i].price,results[i].stock_quantity]);
 				}
+				console.log(table.toString());
 				showOptions();
 			})
 
